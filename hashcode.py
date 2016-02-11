@@ -36,19 +36,6 @@ def parse4(path):
             nb_house = tmp[0]
     return nb_house
 
-def parse_house(path, index):
-    f = open(path)
-    cpt = 0
-    for i, line in enumerate(f):
-        if i > 3 and cpt < 2:
-            while cpt < int(index):
-                l1 = list()
-                l1 = line.split()
-                l2 = list()
-                l2 = next(f).split()
-                cpt += 1
-                return l1 + l2
-
 def list_house(path):
     f = open(path)
     index = int(parse4(path))
@@ -81,9 +68,57 @@ def list_house(path):
         print()
     return l
 
+def parse_orders(path):
+    f = open(path)
+    for i, line in enumerate(f):
+        if i == 3 + 2 * int(parse4(path)) + 1:
+            return line
+
+def list_orders(path):
+    f = open(path)
+    if path == "mother_of_all_warehouses.in":
+        index = int(parse_orders(path)) + int(parse4(path))
+    if path == "busy_day.in":
+        index = int(parse_orders(path)) + 7
+    if path == "redundancy.in":
+        index = int(parse_orders(path)) + 11
+    cpt = 0
+    l = list()
+    i = 0
+    while i < index:
+        cpt_house = 0
+        for j, line in enumerate(f):
+            if j > 3 and cpt_house < 2:
+                cpt_tmp = 0
+                l1 = list()
+                l2 = list()
+                l3 = list()
+                cpt_de_trop = 0
+                while cpt_house < index:
+                    if cpt_de_trop == 0:
+                        l1 = line.split()
+                        l2 = next(f).split()
+                        l3 = next(f).split()
+                        cpt_de_trop += 1
+                    else:
+                        l1 = next(f).split()
+                        l2 = next(f).split()
+                        l3 = next(f).split()
+                        cpt_de_trop += 1
+                    tmp = l1 + l2  + l3
+                    l.insert(cpt_de_trop + 1, tmp)
+                    cpt_house += 1
+        i += 1
+    for tmp in l:
+        print(tmp[0], ', '.join(map(str, tmp[1:])))
+        print()
+    return l
+
 print(parse1("busy_day.in"))
 print(parse2("busy_day.in"))
 #print(parse3("busy_day.in"))
 print(parse4("busy_day.in"))
 #print(list_house("busy_day.in"))
-list_house("busy_day.in")
+#list_house("busy_day.in")
+print(parse_orders("busy_day.in"))
+list_orders("redundancy.in")
