@@ -114,6 +114,14 @@ def list_orders(path):
         print()
     return l
 
+l = ["0 L 0 163 1", "0 D 1 163 1"]
+
+def output(l, path):
+    f = open(path, 'w')
+    f.write(str(len(l)) + "\n")
+    for i in l:
+        f.write(i + "\n")
+
 print(parse1("busy_day.in"))
 print(parse2("busy_day.in"))
 #print(parse3("busy_day.in"))
@@ -122,3 +130,4 @@ print(parse4("busy_day.in"))
 #list_house("busy_day.in")
 print(parse_orders("busy_day.in"))
 list_orders("redundancy.in")
+output(l, "a.out")
